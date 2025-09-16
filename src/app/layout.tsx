@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
 import { env } from '@/env';
+import { cn } from '@/lib/utils';
 import { GoogleTagManager } from '@next/third-parties/google';
 
 import '@/styles/globals.css';
@@ -35,9 +36,13 @@ const RootLayout = ({
   return (
     <html
       lang="ja"
-      className={notoSansJP.className}
+      className={cn(notoSansJP.className, 'select-none')}
     >
-      <body>{children}</body>
+      <body className="text-gray-600">
+        <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+          {children}
+        </main>
+      </body>
       <GoogleTagManager gtmId={env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID} />
     </html>
   );
