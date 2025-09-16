@@ -1,5 +1,5 @@
-import { Home } from '@/components/features/Home';
+import { Calculator } from '@/components/features/Calculator';
 
-const Page = () => <Home />;
+const Page = () => <Calculator />;
 
 export default Page;

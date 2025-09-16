@@ -1,4 +1,4 @@
-# Next.js Template
+# Simple Calculator
 
 ## 開発環境準備
 
