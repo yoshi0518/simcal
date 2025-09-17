@@ -1,6 +1,7 @@
 'use client';
 
 import { CalculatorButton } from '@/components/features/CalculatorButton';
+import { HistoryPanel } from '@/components/features/HistoryPanel';
 import { Card } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { ArrowLeft, Divide, Minus, Plus, X } from 'lucide-react';
@@ -10,7 +11,7 @@ export const Calculator = () => {
 
   return (
     <>
-      <div className="flex w-full items-start justify-center gap-6 p-4">
+      <div className="flex w-full flex-col items-center justify-center gap-10 p-4 md:flex-row md:items-start md:gap-4">
         {/* 電卓本体 start */}
         <div className="w-full max-w-md">
           <Card className="gap-2rounded-2xl border-2 border-gray-300 bg-white p-6 shadow-lg">
@@ -148,9 +149,14 @@ export const Calculator = () => {
 
               {/* 5行目 start */}
               <CalculatorButton
+                value="+/-"
+                type="function"
+                onClick={onClick}
+              />
+
+              <CalculatorButton
                 value="0"
                 type="number"
-                span="col-span-2"
                 onClick={onClick}
               />
 
@@ -171,6 +177,13 @@ export const Calculator = () => {
           </Card>
         </div>
         {/* 電卓本体 end */}
+
+        {/* 計算履歴 start */}
+        {/* <div className="hidden w-64 lg:block"> */}
+        <div className="w-64">
+          <HistoryPanel />
+        </div>
+        {/* 計算履歴 end */}
       </div>
     </>
   );

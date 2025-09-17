@@ -9,3 +9,5 @@ export {
   CardDescription,
   CardContent,
 } from '@/components/ui/card';
+
+export { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
