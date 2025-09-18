@@ -4,9 +4,11 @@ import { CalculatorButton } from '@/components/features/CalculatorButton';
 import { HistoryPanel } from '@/components/features/HistoryPanel';
 import { Card } from '@/components/ui';
 import { cn } from '@/lib/utils';
+import { useCalculatorStore } from '@/stores/calculator';
 import { ArrowLeft, Divide, Minus, Plus, X } from 'lucide-react';
 
 export const Calculator = () => {
+  const { display, inputNumber, inputDecimal } = useCalculatorStore();
   const onClick = () => alert('clicked');
 
   return (
@@ -23,7 +25,7 @@ export const Calculator = () => {
                   aria-live="polite"
                   aria-atomic="true"
                 >
-                  1230
+                  {display}
                 </div>
               </div>
             </div>
@@ -67,19 +69,19 @@ export const Calculator = () => {
               <CalculatorButton
                 value="7"
                 type="number"
-                onClick={onClick}
+                onClick={() => inputNumber('7')}
               />
 
               <CalculatorButton
                 value="8"
                 type="number"
-                onClick={onClick}
+                onClick={() => inputNumber('8')}
               />
 
               <CalculatorButton
                 value="9"
                 type="number"
-                onClick={onClick}
+                onClick={() => inputNumber('9')}
               />
 
               <CalculatorButton
@@ -95,19 +97,19 @@ export const Calculator = () => {
               <CalculatorButton
                 value="4"
                 type="number"
-                onClick={onClick}
+                onClick={() => inputNumber('4')}
               />
 
               <CalculatorButton
                 value="5"
                 type="number"
-                onClick={onClick}
+                onClick={() => inputNumber('5')}
               />
 
               <CalculatorButton
                 value="6"
                 type="number"
-                onClick={onClick}
+                onClick={() => inputNumber('6')}
               />
 
               <CalculatorButton
@@ -123,19 +125,19 @@ export const Calculator = () => {
               <CalculatorButton
                 value="1"
                 type="number"
-                onClick={onClick}
+                onClick={() => inputNumber('1')}
               />
 
               <CalculatorButton
                 value="2"
                 type="number"
-                onClick={onClick}
+                onClick={() => inputNumber('2')}
               />
 
               <CalculatorButton
                 value="3"
                 type="number"
-                onClick={onClick}
+                onClick={() => inputNumber('3')}
               />
 
               <CalculatorButton
@@ -157,13 +159,13 @@ export const Calculator = () => {
               <CalculatorButton
                 value="0"
                 type="number"
-                onClick={onClick}
+                onClick={() => inputNumber('0')}
               />
 
               <CalculatorButton
                 value="."
                 type="number"
-                onClick={onClick}
+                onClick={() => inputDecimal()}
               />
 
               <CalculatorButton
