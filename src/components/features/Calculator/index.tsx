@@ -1,5 +1,6 @@
 'use client';
 
+import { useCallback, useEffect } from 'react';
 import { CalculatorButton } from '@/components/features/CalculatorButton';
 import { HistoryPanel } from '@/components/features/HistoryPanel';
 import { Card } from '@/components/ui';
@@ -8,8 +9,54 @@ import { useCalculatorStore } from '@/stores/calculator';
 import { ArrowLeft, Divide, Minus, Plus, X } from 'lucide-react';
 
 export const Calculator = () => {
-  const { display, inputNumber, inputDecimal } = useCalculatorStore();
-  const onClick = () => alert('clicked');
+  const {
+    display,
+    error,
+    inputNumber,
+    inputDecimal,
+    inputOperator,
+    calculate,
+    clear,
+    allClear,
+    backspace,
+    toggleSign,
+  } = useCalculatorStore();
+
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      event.preventDefault();
+
+      const key = event.key;
+
+      if (key >= '0' && key <= '9') {
+        inputNumber(key);
+      } else if (key === '.') {
+        inputDecimal();
+      } else if (key === '+') {
+        inputOperator('+');
+      } else if (key === '-') {
+        inputOperator('-');
+      } else if (key === '*') {
+        inputOperator('*');
+      } else if (key === '/') {
+        inputOperator('÷');
+      } else if (key === 'Enter' || key === '=') {
+        calculate();
+      } else if (key === 'Escape') {
+        allClear();
+      } else if (key === 'Backspace') {
+        backspace();
+      } else if (key === 'Delete') {
+        clear();
+      }
+    },
+    [inputNumber, inputDecimal, inputOperator, calculate, allClear, backspace, clear],
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [handleKeyPress]);
 
   return (
     <>
@@ -21,7 +68,7 @@ export const Calculator = () => {
             <div className="my-2">
               <div className="flex min-h-[80px] items-center justify-end rounded-xl border-2 border-gray-200 bg-gray-50 p-4">
                 <div
-                  className={cn('text-right text-3xl font-bold break-all', false ? 'text-red-600' : 'text-gray-800')}
+                  className={cn('text-right text-3xl font-bold break-all', error ? 'text-red-600' : 'text-gray-800')}
                   aria-live="polite"
                   aria-atomic="true"
                 >
@@ -38,14 +85,14 @@ export const Calculator = () => {
                 value="AC"
                 type="function"
                 ariaLabel="All Clear"
-                onClick={onClick}
+                onClick={allClear}
               />
 
               <CalculatorButton
                 value="C"
                 type="function"
                 ariaLabel="Clear"
-                onClick={onClick}
+                onClick={clear}
               />
 
               <CalculatorButton
@@ -53,7 +100,7 @@ export const Calculator = () => {
                 type="function"
                 icon={<ArrowLeft />}
                 ariaLabel="Back Space"
-                onClick={onClick}
+                onClick={backspace}
               />
 
               <CalculatorButton
@@ -61,7 +108,7 @@ export const Calculator = () => {
                 type="operator"
                 icon={<Divide />}
                 ariaLabel="Divide"
-                onClick={onClick}
+                onClick={() => inputOperator('÷')}
               />
               {/* 1行目 end */}
 
@@ -89,7 +136,7 @@ export const Calculator = () => {
                 type="operator"
                 icon={<X />}
                 ariaLabel="Multi"
-                onClick={onClick}
+                onClick={() => inputOperator('*')}
               />
               {/* 2行目 end */}
 
@@ -113,11 +160,11 @@ export const Calculator = () => {
               />
 
               <CalculatorButton
-                value="^"
+                value="-"
                 type="operator"
                 icon={<Minus />}
                 ariaLabel="Minus"
-                onClick={onClick}
+                onClick={() => inputOperator('-')}
               />
               {/* 3行目 end */}
 
@@ -145,7 +192,7 @@ export const Calculator = () => {
                 type="operator"
                 icon={<Plus />}
                 ariaLabel="Plus"
-                onClick={onClick}
+                onClick={() => inputOperator('+')}
               />
               {/* 4行目 end */}
 
@@ -153,7 +200,7 @@ export const Calculator = () => {
               <CalculatorButton
                 value="+/-"
                 type="function"
-                onClick={onClick}
+                onClick={toggleSign}
               />
 
               <CalculatorButton
@@ -171,7 +218,7 @@ export const Calculator = () => {
               <CalculatorButton
                 value="="
                 type="equals"
-                onClick={onClick}
+                onClick={calculate}
               />
               {/* 5行目 end */}
             </div>
